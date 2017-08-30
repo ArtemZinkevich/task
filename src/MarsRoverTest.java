@@ -72,4 +72,18 @@ public class MarsRoverTest {
         boolean result = x - 1 == newX && (y == newY) && position + 3 == newPosition;
         Assert.assertTrue(result);
     }
+
+
+    @Test
+    public void findOutCameraPositionTest() {
+        Assert.assertEquals(marsRover.findOutCameraPosition(), MarsRover.CameraView.WATCH_NORTH);
+        marsRover.rightAndForward();
+        Assert.assertEquals(marsRover.findOutCameraPosition(), MarsRover.CameraView.WATCH_EAST);
+        marsRover.rightAndForward();
+        Assert.assertEquals(marsRover.findOutCameraPosition(), MarsRover.CameraView.WATCH_SOUTH);
+        marsRover.rightAndForward();
+        Assert.assertEquals(marsRover.findOutCameraPosition(), MarsRover.CameraView.WATCH_WEST);
+        marsRover.rightAndForward();
+        Assert.assertEquals(marsRover.findOutCameraPosition(), MarsRover.CameraView.WATCH_NORTH);
+    }
 }

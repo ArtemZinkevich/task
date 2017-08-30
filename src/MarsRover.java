@@ -2,7 +2,7 @@
  * Created by RTM on 30.08.2017.
  */
 public class MarsRover {
-    private enum CameraView {
+    enum CameraView {
         WATCH_NORTH("V"), WATCH_SOUTH("^"), WATCH_EAST("<"), WATCH_WEST(">");
 
         CameraView(String designation) {
