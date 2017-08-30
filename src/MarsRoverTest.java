@@ -60,4 +60,16 @@ public class MarsRoverTest {
         Assert.assertTrue(result);
     }
 
+    @Test
+    public void leftAndForwardTest() {
+        int x = marsRover.getCurrentX();
+        int y = marsRover.getCurrentY();
+        int position = marsRover.getViewPosition();
+        marsRover.leftAndForward();
+        int newX = marsRover.getCurrentX();
+        int newY = marsRover.getCurrentY();
+        int newPosition = marsRover.getViewPosition();
+        boolean result = x - 1 == newX && (y == newY) && position + 3 == newPosition;
+        Assert.assertTrue(result);
+    }
 }
