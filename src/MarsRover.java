@@ -1,9 +1,11 @@
+import java.io.*;
+
 /**
  * Created by RTM on 30.08.2017.
  */
 public class MarsRover {
     enum CameraView {
-        WATCH_NORTH("V"), WATCH_SOUTH("^"), WATCH_EAST("<"), WATCH_WEST(">");
+        WATCH_NORTH(" V "), WATCH_SOUTH(" ^ "), WATCH_EAST(" < "), WATCH_WEST(" > ");
 
         CameraView(String designation) {
             this.designation = designation;
@@ -79,7 +81,7 @@ public class MarsRover {
         CameraView current = CameraView.getCameraViewByNumber(viewPosition);
         switch (current) {
             case WATCH_NORTH: {
-                currentY = ++currentY;
+                currentY = --currentY;
                 break;
             }
             case WATCH_WEST: {
@@ -91,7 +93,7 @@ public class MarsRover {
                 break;
             }
             case WATCH_SOUTH: {
-                currentY = --currentY;
+                currentY = ++currentY;
                 break;
             }
         }
@@ -101,7 +103,7 @@ public class MarsRover {
         CameraView current = CameraView.getCameraViewByNumber(viewPosition);
         switch (current) {
             case WATCH_NORTH: {
-                currentY = --currentY;
+                currentY = ++currentY;
                 break;
             }
             case WATCH_WEST: {
@@ -113,12 +115,37 @@ public class MarsRover {
                 break;
             }
             case WATCH_SOUTH: {
-                currentY = ++currentY;
+                currentY = --currentY;
                 break;
             }
         }
     }
 
+    public void showOnMap() {
+        int minXPixels = 3;
+        int minYPixels = 3;
+        int xFromOrigin = Math.abs(START_X - currentX);
+        int yFromOrigin = Math.abs(START_Y - currentY);
+        if (minXPixels < xFromOrigin) {
+            minXPixels = (int) (xFromOrigin * 1.5d);
+        }
+        if (minYPixels < yFromOrigin) {
+            minYPixels = (int) (yFromOrigin * 1.5d);
+        }
+        for (int i = -minYPixels; i <= minYPixels; i++) {
+            for (int j = -minXPixels; j <= minXPixels; j++) {
+                if (i == currentY && j == currentX) {
+                    System.out.print(findOutCameraPosition());
+                } else if (i == START_Y && j == START_X) {
+                    System.out.print(" O ");
+                } else {
+                    System.out.print(" X ");
+                }
+
+            }
+            System.out.println();
+        }
+    }
 
     public CameraView findOutCameraPosition() {
         return CameraView.getCameraViewByNumber(viewPosition);
@@ -149,4 +176,50 @@ public class MarsRover {
         }
     }
 
+    private void executeCommand(String string) {
+        switch (string) {
+            case "forward": {
+                goStraightAhead();
+                break;
+            }
+            case "backward": {
+                goStraightBehind();
+                break;
+            }
+            case "left": {
+                leftAndForward();
+                break;
+            }
+            case "right": {
+                rightAndForward();
+                break;
+            }
+            default: {
+                throw new UnsupportedOperationException();
+            }
+        }
+
+    }
+
+    public void investigateMars() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Start investigation!");
+        System.out.println("POSSIBLE COMMANDS: forward,backward,left,right,exit");
+        showOnMap();
+        String s;
+        while (!(s = reader.readLine()).equals("exit")) {
+            try {
+                executeCommand(s);
+            } catch (UnsupportedOperationException e) {
+                System.out.println("POSSIBLE COMMANDS: forward,backward,left,right,exit");
+            }
+            showOnMap();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        MarsRover marsRover = new MarsRover();
+        marsRover.investigateMars();
+    }
 }
