@@ -33,4 +33,31 @@ public class MarsRoverTest {
         boolean result = x == newX && (y + 1 == newY) && position == newPosition;
         Assert.assertTrue(result);
     }
+
+    @Test
+    public void goStraightBehindTest() {
+        int x = marsRover.getCurrentX();
+        int y = marsRover.getCurrentY();
+        int position = marsRover.getViewPosition();
+        marsRover.goStraightBehind();
+        int newX = marsRover.getCurrentX();
+        int newY = marsRover.getCurrentY();
+        int newPosition = marsRover.getViewPosition();
+        boolean result = x == newX && (y - 1 == newY) && position == newPosition;
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void rightAndForwardTest() {
+        int x = marsRover.getCurrentX();
+        int y = marsRover.getCurrentY();
+        int position = marsRover.getViewPosition();
+        marsRover.rightAndForward();
+        int newX = marsRover.getCurrentX();
+        int newY = marsRover.getCurrentY();
+        int newPosition = marsRover.getViewPosition();
+        boolean result = x + 1 == newX && (y == newY) && position + 1 == newPosition;
+        Assert.assertTrue(result);
+    }
+
 }

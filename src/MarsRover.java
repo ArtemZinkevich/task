@@ -136,14 +136,14 @@ public class MarsRover {
 
 
     private void turnCameraRight() {
-        viewPosition = viewPosition++;
+        viewPosition = ++viewPosition;
         if (viewPosition > 4) {
             viewPosition = viewPosition - CameraView.MAX_CAMERA_VIEW;
         }
     }
 
     private void turnCameraLeft() {
-        viewPosition = viewPosition--;
+        viewPosition = --viewPosition;
         if (viewPosition < 1) {
             viewPosition = viewPosition + CameraView.MAX_CAMERA_VIEW;
         }
